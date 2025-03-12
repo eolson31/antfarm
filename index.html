@@ -1,12 +1,16 @@
 <head>
     <link rel="stylesheet" href="styling/index.css">
+    <script src="./src/index.js"></script>
 </head>
 
 <body>
     <div class="main_screen">
         <iframe src="display/info_bar.html" class="info_bar"></iframe>
-        <div class="sidebar_screen">
-            <iframe src="display/sidebar.html" class="sidebar"></iframe>
+        <div class="sidebar_farm">
+            <div class="sidebar_container" id="sidebar_container">
+                <iframe src="display/sidebar.html" class="sidebar" id="sidebar"></iframe>
+                <button class="toggle_sidebar_button" id="toggle_sidebar_button"><</button>
+            </div>
             <iframe src="display/ant_farm.html" class="ant_farm"></iframe>
         </div>
     </div>
