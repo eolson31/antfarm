@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+iframe {
+    border: none;
+}
+
+.main_screen {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar_screen {
+    display: flex;
+    flex-direction: row;
+}
+
+.info_bar {
+    height: 100%;
+}
+
+.sidebar {
+    width: 20%;
+    height: 90vh;
+}
+
+.ant_farm {
+    width: 80%;
+    height: 90vh; 
+}

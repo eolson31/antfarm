@@ -1,0 +1,39 @@
+body {
+    margin: 0px;
+    border-style: solid;
+}
+
+.flex_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.dirt_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.dirt_row {
+    display: flex;
+    flex-direction: row;
+}
+
+.dirt_image {
+}
+
+@media screen and (max-width: 1300px) {
+    .dirt_image {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .dirt_image {
+        width: 64px;
+        height: 64px;
+    }
+}
