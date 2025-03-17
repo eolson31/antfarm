@@ -1,22 +1,25 @@
+import { new_node } from "./node.js";
 
 const dirt_width = 9;
 const dirt_height = 7;
 
-function createDirt() {
+document.addEventListener("DOMContentLoaded", () => {
     const dirt_div = document.getElementById("dirt_container");
 
-    for (let index_y = 0; index_y < dirt_height; index_y++) {
+    for (let row = 0; row < dirt_height; row++) {
         // Create row div
         const row_div = document.createElement("div");
         row_div.classList.add("dirt_row");
         dirt_div.appendChild(row_div);
         // Add images to row
-        for (let index_x = 0; index_x < dirt_width; index_x++) {
+        for (let column = 0; column < dirt_width; column++) {
             const image = document.createElement("img");
-            image.id = "dirt-" + index_y + "-" + index_x;
+            image.id = "dirt-" + row + "-" + column;
             image.src = "../images/dirt.png";
             image.classList.add("dirt_image")
             row_div.appendChild(image);
+
+            new_node(image, row, column);
         }
     }
-}
+});

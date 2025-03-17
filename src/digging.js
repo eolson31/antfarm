@@ -1,4 +1,4 @@
-let start_nodes = [{x: 4, y: 0}];
+let start_nodes = [{row: 0, column: 4}];
 
 function get_start_node() {
     if (start_nodes.length === 0) {
@@ -11,31 +11,31 @@ function get_start_node() {
 }
 
 function get_end_node() {
-    return {x:0, y: 6};
+    return {row: 6, column: 0};
 }
 
 function _nodes_equal(node1, node2) {
-    return (node1.x === node2.x) && (node1.y === node2.y);
+    return (node1.row === node2.row) && (node1.column === node2.column);
 }
 
 function get_adjacent_nodes(node) {
     return [
-        {x: node.x, y: node.y + 1}, 
-        {x: node.x, y: node.y - 1},
-        {x: node.x + 1, y: node.y}, 
-        {x: node.x - 1, y: node.y},
+        {row: node.row + 1, column: node.column}, 
+        {row: node.row - 1, column: node.column},
+        {row: node.row, column: node.column + 1}, 
+        {row: node.row, column: node.column - 1},
     ]
 }
 
-// Convert a node {x, y} to a unique string key
+// Convert a node {row, column} to a unique string key
 function _node_key(node) {
-    return `${node.x},${node.y}`;
+    return `${node.row},${node.column}`;
 }
 
-// Convert string key "x,y" back to {x, y} object
+// Convert string key "column,row" back to {column, row} object
 function _parse_key(key) {
-    const [x, y] = key.split(",").map(Number);
-    return { x, y };
+    const [row, column] = key.split(",").map(Number);
+    return {row, column};
 }
 
 function _reconstruct_path(came_from, end_node) {
@@ -43,7 +43,7 @@ function _reconstruct_path(came_from, end_node) {
     let key = _node_key(end_node);
 
     while (key !== null) {
-        path.push(_parse_key(key));  // Convert "x,y" string back to object
+        path.push(_parse_key(key));  // Convert "row, column" string back to object
         key = came_from.get(key);  // Get parent key
     }
 
