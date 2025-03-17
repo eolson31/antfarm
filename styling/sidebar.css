@@ -6,10 +6,20 @@ body {
     
 }
 
+.shop_text {
+    text-align: center;
+}
+
 .sidebar_items {
     display: flex;
     flex-direction: column;
     background-color:bisque;
     width: 300px;
-    padding: 10px;
+}
+
+.sidebar_item {
+    height: 100px;
+    background: none;
+    border: none;
+    border-top: 3px solid black;
 }
