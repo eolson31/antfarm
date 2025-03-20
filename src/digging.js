@@ -1,6 +1,14 @@
-let start_nodes = [{row: 0, column: 4}];
+import { get_node } from "./node.js";
+
+let start_nodes = [];
+
+export function initialize_start_nodes() {
+    start_nodes.push(get_node(0, 4));
+    console.log(start_nodes)
+}
 
 function get_start_node() {
+    console.log(start_nodes)
     if (start_nodes.length === 0) {
         throw new Error("No starting nodes were found!");
     }
@@ -11,31 +19,26 @@ function get_start_node() {
 }
 
 function get_end_node() {
-    return {row: 6, column: 0};
+    return get_node(6, 0);
 }
 
 function _nodes_equal(node1, node2) {
-    return (node1.row === node2.row) && (node1.column === node2.column);
+    return (node1.getRow() === node2.getRow()) && (node1.getColumn() === node2.getColumn());
 }
 
 function get_adjacent_nodes(node) {
-    return [
-        {row: node.row + 1, column: node.column}, 
-        {row: node.row - 1, column: node.column},
-        {row: node.row, column: node.column + 1}, 
-        {row: node.row, column: node.column - 1},
-    ]
+    return node.node_connections();
 }
 
 // Convert a node {row, column} to a unique string key
 function _node_key(node) {
-    return `${node.row},${node.column}`;
+    return `${node.getRow()},${node.getColumn()}`;
 }
 
 // Convert string key "column,row" back to {column, row} object
 function _parse_key(key) {
     const [row, column] = key.split(",").map(Number);
-    return {row, column};
+    return nodes[row][column];
 }
 
 function _reconstruct_path(came_from, end_node) {

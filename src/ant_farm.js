@@ -1,10 +1,11 @@
 import { new_node } from "./node.js";
+import { initialize_start_nodes } from "./digging.js";
 
 const dirt_width = 9;
 const dirt_height = 7;
 
 document.addEventListener("DOMContentLoaded", () => {
-    const dirt_div = document.getElementById("dirt_container");
+    const dirt_div = document.getElementById("dirt_grid");
 
     for (let row = 0; row < dirt_height; row++) {
         // Create row div
@@ -22,4 +23,5 @@ document.addEventListener("DOMContentLoaded", () => {
             new_node(image, row, column);
         }
     }
+    initialize_start_nodes()
 });

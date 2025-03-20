@@ -1,18 +1,39 @@
 <!doctype html>
 <head>
-    <link rel="stylesheet" href="styling/index.css">
+    <link rel="stylesheet" href="styling.css">
+    <script src="./src/ant_farm.js" type="module"></script>
+    <script src="./src/context.js" type="module"></script>
+    <script src="./src/digging.js" type="module"></script>
     <script src="./src/index.js" type="module"></script>
+    <script src="./src/info_bar.js" type="module"></script>
+    <script src="./src/node.js" type="module"></script>
+    <script src="./src/sidebar.js" type="module"></script>
 </head>
 
 <body>
     <div class="main_screen">
-        <iframe src="display/info_bar.html" class="info_bar"></iframe>
+        <div class="info_bar_container">
+            <p>Speed Controllers</p>
+            <p>Current time & day</p>
+            <div class="hill_info">
+                <p id="info_bar_strength"></p>
+                <p id="info_bar_resources">Resources</p>
+            </div>
+        </div>
+        <button>Refresh</button>
         <div class="sidebar_farm">
             <div class="sidebar_container" id="sidebar_container">
-                <iframe src="display/sidebar.html" class="sidebar" id="sidebar"></iframe>
-                <button class="toggle_sidebar_button" id="toggle_sidebar_button"><</button>
+                <div class="sidebar_and_button">
+                    <div class="sidebar_items" id="sidebar_items">
+                        <h1 class="shop_text">Shop</h1>
+                    </div>
+                    <button class="toggle_sidebar_button" id="toggle_sidebar_button"><</button>
+                </div>
             </div>
-            <iframe src="display/ant_farm.html" class="ant_farm"></iframe>
+            <div id="dirt_container" class="dirt_container">
+                <img src="../images/ant.png">
+                <div id="dirt_grid" class="dirt_grid"></div>
+            </div>
         </div>
     </div>
 </body>
