@@ -4,11 +4,9 @@ let start_nodes = [];
 
 export function initialize_start_nodes() {
     start_nodes.push(get_node(0, 4));
-    console.log(start_nodes)
 }
 
 function get_start_node() {
-    console.log(start_nodes)
     if (start_nodes.length === 0) {
         throw new Error("No starting nodes were found!");
     }
@@ -23,22 +21,22 @@ function get_end_node() {
 }
 
 function _nodes_equal(node1, node2) {
-    return (node1.getRow() === node2.getRow()) && (node1.getColumn() === node2.getColumn());
+    return (node1.get_row === node2.get_row) && (node1.get_column === node2.get_column);
 }
 
 function get_adjacent_nodes(node) {
-    return node.node_connections();
+    return node.node_connections;
 }
 
 // Convert a node {row, column} to a unique string key
 function _node_key(node) {
-    return `${node.getRow()},${node.getColumn()}`;
+    return `${node.get_row},${node.get_column}`;
 }
 
 // Convert string key "column,row" back to {column, row} object
 function _parse_key(key) {
     const [row, column] = key.split(",").map(Number);
-    return nodes[row][column];
+    return get_node(row, column);
 }
 
 function _reconstruct_path(came_from, end_node) {
@@ -71,6 +69,7 @@ function bfs(start_node, end_node) {
             return _reconstruct_path(came_from, end_node);
         }
         // Main search loop
+        console.log(get_adjacent_nodes(current_node));
         for (const adjacent_node of get_adjacent_nodes(current_node)) {
             let adjacent_key = _node_key(adjacent_node);
 

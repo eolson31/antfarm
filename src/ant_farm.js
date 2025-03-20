@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             row_div.appendChild(image);
 
             new_node(image, row, column);
+            
         }
     }
     initialize_start_nodes()
