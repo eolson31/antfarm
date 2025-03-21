@@ -17,14 +17,6 @@ body {
     justify-content: center;
 }
 
-.info_bar {
-    height: 100%;
-}
-
-.ant_farm {
-    width: 100%;
-}
-
 /* ant farm */
 
 .dirt_container {
@@ -87,6 +79,8 @@ body {
     left: 0;
     transition: transform 0.3s;
     overflow-x: hidden;
+    height: 100%;
+    background-color: aliceblue;
 }
 
 .sidebar_and_button {
@@ -96,7 +90,7 @@ body {
 }
 
 .hide {
-    transform: translateX(-90%);
+    transform: translateX(-93%);
 }
 
 .toggle_sidebar_button {
@@ -122,4 +116,10 @@ body {
     background: none;
     border: none;
     border-top: 3px solid black;
+}
+
+
+
+.image_darken {
+    filter: brightness(25%);
 }

@@ -16,8 +16,8 @@ function get_start_node() {
     return node;
 }
 
-function get_end_node() {
-    return get_node(6, 0);
+function get_end_node(location) {
+    return get_node(location[0], location[1]);
 }
 
 function _nodes_equal(node1, node2) {
@@ -69,7 +69,6 @@ function bfs(start_node, end_node) {
             return _reconstruct_path(came_from, end_node);
         }
         // Main search loop
-        console.log(get_adjacent_nodes(current_node));
         for (const adjacent_node of get_adjacent_nodes(current_node)) {
             let adjacent_key = _node_key(adjacent_node);
 
@@ -83,8 +82,8 @@ function bfs(start_node, end_node) {
     throw new Error("No path found")
 }
 
-export function find_path() {
+export function find_path(location) {
     const start_node = get_start_node();
-    const end_node = get_end_node();
+    const end_node = get_end_node(location)
     return bfs(start_node, end_node);
 }

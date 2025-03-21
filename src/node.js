@@ -11,6 +11,10 @@ class Node {
         this.connections = new Set();
     }
 
+    get element() {
+        return this.html_element;
+    }
+
     get get_row() {
         return this.row;
     }
