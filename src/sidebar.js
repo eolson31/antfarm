@@ -9,8 +9,10 @@ const shop_items = [item1, item2, item3]
 
 function purchase_item(event) {
     const shop_item = event.target.name
-    console.log(shop_item);
-    console.log(find_path());
+    const path = find_path()
+    for (const node of path) {
+        node.element.classList.add("image_darken");
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

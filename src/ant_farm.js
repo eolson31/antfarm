@@ -1,8 +1,8 @@
 import { new_node } from "./node.js";
 import { initialize_start_nodes, find_path } from "./digging.js";
 
-const dirt_width = 9;
-const dirt_height = 7;
+export const dirt_width = 9;
+export const dirt_height = 7;
 
 function parse_dirt_name(name) {
     const split_name = name.split("-");

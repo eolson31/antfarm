@@ -1,4 +1,6 @@
 import { get_node } from "./node.js";
+import { random_int } from "./random_number.js";
+import { dirt_height, dirt_width } from "./ant_farm.js";
 
 let target_nodes = new Set();
 
@@ -11,6 +13,23 @@ function get_source_node(location) {
     return get_node(location[0], location[1]);
 }
 
+function _node_distance_is_acceptable(source_node, distance) {
+    for (const target_node of target_nodes) {
+        if ((Math.abs(source_node.get_row - target_node.get_row) + Math.abs(source_node.get_column - target_node.get_column)) <= distance) {
+            return true
+        }
+    }
+    return false
+}
+
+function get_random_source_node() {
+    do {
+        var row = random_int(dirt_height);
+        var column = random_int(dirt_width);
+        var source_node = get_node(row, column)
+    } while (!_node_distance_is_acceptable(source_node, 5) || at_target(source_node));
+    return source_node;
+}
 
 function get_adjacent_nodes(node) {
     return node.node_connections;
@@ -87,8 +106,8 @@ function update_source_nodes(path) {
     }
 }
 
-export function find_path(location) {
-    const source_node = get_source_node(location);
+export function find_path(location=undefined) {
+    const source_node = location === undefined ? get_random_source_node() : get_source_node(location);
     const path = bfs(source_node);
     update_source_nodes(path);
     return path;
