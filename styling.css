@@ -62,6 +62,8 @@ body {
     justify-content: space-between;
     background-color:rgba(165, 42, 42, 0.303);
     padding: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .hill_info {
