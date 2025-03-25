@@ -1,28 +1,16 @@
 import { get_node } from "./node.js";
 
-let start_nodes = [];
+let target_nodes = new Set();
 
 export function initialize_start_nodes() {
-    start_nodes.push(get_node(0, 4));
+    target_nodes.add(get_node(0, 4));
 }
 
-function get_start_node() {
-    if (start_nodes.length === 0) {
-        throw new Error("No starting nodes were found!");
-    }
-    const index = Math.floor(Math.random() * start_nodes.length);
-    const node = start_nodes[index];
-    start_nodes = start_nodes.splice(index, 1);
-    return node;
-}
 
-function get_end_node(location) {
+function get_source_node(location) {
     return get_node(location[0], location[1]);
 }
 
-function _nodes_equal(node1, node2) {
-    return (node1.get_row === node2.get_row) && (node1.get_column === node2.get_column);
-}
 
 function get_adjacent_nodes(node) {
     return node.node_connections;
@@ -39,6 +27,15 @@ function _parse_key(key) {
     return get_node(row, column);
 }
 
+function at_target(source_node) {
+    for (const target_node of target_nodes) {
+        if ((source_node.get_row === target_node.get_row) && (source_node.get_column === target_node.get_column)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function _reconstruct_path(came_from, end_node) {
     let path = [];
     let key = _node_key(end_node);
@@ -51,39 +48,48 @@ function _reconstruct_path(came_from, end_node) {
     return path.reverse();
 }
 
-function bfs(start_node, end_node) {
+function bfs(source_node) {
     const explored = new Set();
-    const queue = [start_node];
+    const queue = [source_node];
     const came_from = new Map();
-    let start_key = _node_key(start_node);
+    let start_key = _node_key(source_node);
 
     explored.add(start_key);
     came_from.set(start_key, null);
-    queue.push(start_node);
+    queue.push(source_node);
 
     while (queue.length > 0) {
         const current_node = queue.shift();
         const current_key = _node_key(current_node);
         // If current node is the end node
-        if (_nodes_equal(current_node, end_node)) {
-            return _reconstruct_path(came_from, end_node);
+        if (at_target(current_node)) {
+            return _reconstruct_path(came_from, current_node);
         }
         // Main search loop
         for (const adjacent_node of get_adjacent_nodes(current_node)) {
-            let adjacent_key = _node_key(adjacent_node);
+            if (adjacent_node !== undefined) {
+                let adjacent_key = _node_key(adjacent_node);
 
-            if (!explored.has(adjacent_key)) {
-                explored.add(adjacent_key);
-                came_from.set(adjacent_key, current_key);
-                queue.push(adjacent_node);
+                if (!explored.has(adjacent_key)) {
+                    explored.add(adjacent_key);
+                    came_from.set(adjacent_key, current_key);
+                    queue.push(adjacent_node);
+                }
             }
         }
     }
     throw new Error("No path found")
 }
 
+function update_source_nodes(path) {
+    for (const node of path) {
+        target_nodes.add(node);
+    }
+}
+
 export function find_path(location) {
-    const start_node = get_start_node();
-    const end_node = get_end_node(location)
-    return bfs(start_node, end_node);
+    const source_node = get_source_node(location);
+    const path = bfs(source_node);
+    update_source_nodes(path);
+    return path;
 }

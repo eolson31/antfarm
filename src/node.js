@@ -8,7 +8,7 @@ class Node {
         this.row = row;
         this.column = column;
         this.image = new DirtImage();
-        this.connections = new Set();
+        this.connections = [undefined, undefined, undefined, undefined];
     }
 
     get element() {
@@ -27,10 +27,9 @@ class Node {
         return this.connections;
     }
 
-    add_connection(node) {
-        this.connections.add(node);
+    add_connection(node, index) {
+        this.connections[index] = node;
     }
-
 }
 
 export function new_node(element, row, column) {
@@ -54,29 +53,29 @@ function set_connections(node) {
             case Direction.UP:
                 if (nodes[row - 1]) {
                     const connecting_node = nodes[row - 1][column];
-                    node.add_connection(connecting_node);
-                    connecting_node.add_connection(node);
+                    node.add_connection(connecting_node, Direction.UP);
+                    connecting_node.add_connection(node, Direction.DOWN);
                 }
                 break;
             case Direction.DOWN:
                 if (nodes[row + 1]) {
                     const connecting_node = nodes[row + 1][column];
-                    node.add_connection(connecting_node);
-                    connecting_node.add_connection(node);
+                    node.add_connection(connecting_node, Direction.DOWN);
+                    connecting_node.add_connection(node, Direction.UP);
                 }
                 break;
             case Direction.LEFT:
                 if (nodes[row][column - 1]) {
                     const connecting_node = nodes[row][column - 1];
-                    node.add_connection(connecting_node);
-                    connecting_node.add_connection(node);
+                    node.add_connection(connecting_node, Direction.LEFT);
+                    connecting_node.add_connection(node, Direction.RIGHT);
                 }
                 break;
             case Direction.RIGHT:
                 if (nodes[row][column + 1]) {
                     const connecting_node = nodes[row][column + 1];
-                    node.add_connection(connecting_node);
-                    connecting_node.add_connection(node);
+                    node.add_connection(connecting_node, Direction.RIGHT);
+                    connecting_node.add_connection(node, Direction.LEFT);
                 }
                 break;
             case Default:
