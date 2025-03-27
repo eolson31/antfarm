@@ -53,6 +53,12 @@ body {
     }
 }
 
+.ant_image {
+    position: absolute;
+    z-index: 1;
+    top: 195px;
+    left: 750px;
+}
 
 /* info bar */
 
@@ -62,7 +68,6 @@ body {
     justify-content: space-between;
     background-color:rgba(165, 42, 42, 0.303);
     padding: 10px;
-    justify-content: center;
     margin-bottom: 10px;
 }
 
@@ -110,7 +115,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color:bisque;
-    width: 300px;
+    width: 250px;
 }
 
 .sidebar_item {
