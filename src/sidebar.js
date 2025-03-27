@@ -13,7 +13,7 @@ function purchase_item(event) {
     for (const node of path) {
         node.element.classList.add("image_darken");
     }
-    path[0].element.src = "../images/" + shop_item + ".png";
+    path[0].element.src = "images/" + shop_item + ".png";
 }
 
 document.addEventListener("DOMContentLoaded", () => {

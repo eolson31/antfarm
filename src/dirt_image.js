@@ -1,5 +1,5 @@
 export const ImageType = Object.freeze({
-    DEFAULT: "./images/dirt.png",
+    DEFAULT: "images/dirt.png",
 });
 
 export const Direction = Object.freeze({
