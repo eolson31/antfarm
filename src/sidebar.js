@@ -1,4 +1,4 @@
-import {find_path} from "./digging.js"
+import { dig } from "./node.js";
 
 const item1 = {name: "item1"};
 const item2 = {name: "item2"};
@@ -8,12 +8,8 @@ const shop_items = [item1, item2, item3]
 
 
 function purchase_item(event) {
-    const shop_item = event.target.name
-    const path = find_path()
-    for (const node of path) {
-        node.element.classList.add("image_darken");
-    }
-    path[0].element.src = "images/" + shop_item + ".png";
+    const shop_item = event.target.name;
+    dig(shop_item);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

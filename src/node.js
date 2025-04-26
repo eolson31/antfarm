@@ -1,4 +1,6 @@
-import { DirtImage, Direction } from "./dirt_image.js";
+import { DirtImage, Direction, directions, ImageType } from "./dirt_image.js";
+import {find_path} from "./path_finding.js"
+
 
 const nodes = []; // 2d array to store node grid
 
@@ -23,12 +25,28 @@ class Node {
         return this.column;
     }
 
+    get get_image() {
+        return this.image.image_path;
+    }
+
     get node_connections() {
         return this.connections;
     }
 
     add_connection(node, index) {
         this.connections[index] = node;
+    }
+
+    set_as_path() {
+        this.image.set_type(ImageType.PATH, false);
+    }
+
+    set_as_building() {
+        this.image.set_type(ImageType.BUILDING);
+    }
+
+    refresh_image() {
+        this.element.src = this.get_image;
     }
 }
 
@@ -39,6 +57,7 @@ export function new_node(element, row, column) {
     const new_node = new Node(element, row, column);
     nodes[row][column] = new_node;
     set_connections(new_node);
+    return new_node;
 }
 
 export function get_node(row, column) {
@@ -80,6 +99,66 @@ function set_connections(node) {
                 break;
             case Default:
                 throw new Error("Unknown direction found: " + direction)
+        }
+    }
+}
+
+function get_adjacent_nodes(node) {
+    let adjacent_nodes = [undefined, undefined, undefined, undefined];
+    let row = node.get_row;
+    let column = node.get_column;
+    if (nodes[row - 1]) {
+        adjacent_nodes[0] = (nodes[row - 1][column]);
+    }
+    if (nodes[row + 1]) {
+        adjacent_nodes[1] = (nodes[row + 1][column]);
+    }
+    if (nodes[row][column - 1]) {
+        adjacent_nodes[2] = (nodes[row][column - 1]);
+    }
+    if (nodes[row][column + 1]) {
+        adjacent_nodes[3] = (nodes[row][column + 1]);
+    }
+    return adjacent_nodes;
+}
+
+function update_path_image(node) {
+    let adjacent_nodes = get_adjacent_nodes(node);
+    let connection_directions = [];
+    // Find which nodes need to connect with
+    for (let index in adjacent_nodes) {
+        if (adjacent_nodes[index] !== undefined && adjacent_nodes[index].image.image_type !== ImageType.DEFAULT) {
+            connection_directions.push(directions[index]);
+        }
+    }
+    // Update image
+    node.image.update_path_type(connection_directions);
+    node.refresh_image()
+}
+
+function update_building_image(node, building) {
+    node.image.update_building_type(building);
+    node.refresh_image();
+}
+
+export function dig(building) {
+    const path = find_path();
+    // Set nodes as a path
+    for (const node of path) {
+        if (node.image.image_type !== ImageType.BUILDING) {
+            node.set_as_path();
+        }
+    }
+    // Put building image
+    let building_node = path[0];
+    building_node.set_as_building();
+    update_building_image(building_node, building);
+    // Update path images
+    for (const row of nodes) {
+        for (const node of row) {
+            if (node.image.image_type === ImageType.PATH) {
+                update_path_image(node);
+            }
         }
     }
 }

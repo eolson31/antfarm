@@ -1,5 +1,5 @@
 import { new_node } from "./node.js";
-import { initialize_start_nodes, find_path } from "./digging.js";
+import { initialize_start_nodes, find_path } from "./path_finding.js";
 
 export const dirt_width = 9;
 export const dirt_height = 7;
@@ -28,13 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // Add images to row
         for (let column = 0; column < dirt_width; column++) {
             const image = document.createElement("img");
+            let node = new_node(image, row, column);
             image.id = "dirt-" + row + "-" + column;
-            image.src = "images/dirt.png";
+            image.src = node.get_image;
             image.classList.add("dirt_image")
             image.addEventListener("click", dirt_clicked)
             row_div.appendChild(image);
 
-            new_node(image, row, column);
             
         }
     }
