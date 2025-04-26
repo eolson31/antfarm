@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let column = 0; column < dirt_width; column++) {
             const image = document.createElement("img");
             image.id = "dirt-" + row + "-" + column;
-            image.src = "../images/dirt.png";
+            image.src = "images/dirt.png";
             image.classList.add("dirt_image")
             image.addEventListener("click", dirt_clicked)
             row_div.appendChild(image);
