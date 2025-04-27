@@ -1,8 +1,11 @@
 import { new_node } from "./node.js";
 import { initialize_start_nodes, find_path } from "./path_finding.js";
+import { ImageType } from "./dirt_image.js";
 
-export const dirt_width = 9;
-export const dirt_height = 7;
+export const farm_width = 9;
+export const air_height = 2;
+export const dirt_height = 5;
+export const farm_height = air_height + dirt_height;
 
 function parse_dirt_name(name) {
     const split_name = name.split("-");
@@ -20,22 +23,24 @@ function dirt_clicked(event) {
 document.addEventListener("DOMContentLoaded", () => {
     const dirt_div = document.getElementById("dirt_grid");
 
-    for (let row = 0; row < dirt_height; row++) {
+    for (let row = 0; row < farm_height; row++) {
         // Create row div
         const row_div = document.createElement("div");
         row_div.classList.add("dirt_row");
         dirt_div.appendChild(row_div);
         // Add images to row
-        for (let column = 0; column < dirt_width; column++) {
+        for (let column = 0; column < farm_width; column++) {
             const image = document.createElement("img");
-            let node = new_node(image, row, column);
+            if (row < air_height) {
+                var image_type = ImageType.AIR
+            } else {
+                var image_type = ImageType.DIRT
+            }
+            let node = new_node(image, row, column, image_type);
             image.id = "dirt-" + row + "-" + column;
-            image.src = node.get_image;
             image.classList.add("dirt_image")
             image.addEventListener("click", dirt_clicked)
-            row_div.appendChild(image);
-
-            
+            row_div.appendChild(image); 
         }
     }
     initialize_start_nodes()

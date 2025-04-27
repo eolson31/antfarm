@@ -1,6 +1,6 @@
 import { get_node } from "./node.js";
 import { random_int } from "./random_number.js";
-import { dirt_height, dirt_width } from "./ant_farm.js";
+import { dirt_height, farm_width } from "./ant_farm.js";
 
 let target_nodes = new Set();
 
@@ -25,7 +25,7 @@ function _node_distance_is_acceptable(source_node, distance) {
 function get_random_source_node() {
     do {
         var row = random_int(dirt_height);
-        var column = random_int(dirt_width);
+        var column = random_int(farm_width);
         var source_node = get_node(row, column)
     } while (!_node_distance_is_acceptable(source_node, 5) || at_target(source_node));
     return source_node;

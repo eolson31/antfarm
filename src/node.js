@@ -1,15 +1,15 @@
-import { DirtImage, Direction, directions, ImageType } from "./dirt_image.js";
+import { Image, Direction, directions, ImageType } from "./dirt_image.js";
 import {find_path} from "./path_finding.js"
 
 
 const nodes = []; // 2d array to store node grid
 
 class Node {
-    constructor(element, row, column) {
+    constructor(element, row, column, image_type) {
         this.html_element = element;
         this.row = row;
         this.column = column;
-        this.image = new DirtImage();
+        this.image = new Image(image_type);
         this.connections = [undefined, undefined, undefined, undefined];
     }
 
@@ -50,13 +50,14 @@ class Node {
     }
 }
 
-export function new_node(element, row, column) {
+export function new_node(element, row, column, image_type) {
     if (!nodes[row]) {
         nodes[row] =[];
     }
-    const new_node = new Node(element, row, column);
+    const new_node = new Node(element, row, column, image_type);
     nodes[row][column] = new_node;
     set_connections(new_node);
+    new_node.refresh_image();
     return new_node;
 }
 
@@ -97,7 +98,7 @@ function set_connections(node) {
                     connecting_node.add_connection(node, Direction.LEFT);
                 }
                 break;
-            case Default:
+            default:
                 throw new Error("Unknown direction found: " + direction)
         }
     }
@@ -127,7 +128,7 @@ function update_path_image(node) {
     let connection_directions = [];
     // Find which nodes need to connect with
     for (let index in adjacent_nodes) {
-        if (adjacent_nodes[index] !== undefined && adjacent_nodes[index].image.image_type !== ImageType.DEFAULT) {
+        if (adjacent_nodes[index] !== undefined && adjacent_nodes[index].image.image_type !== ImageType.DIRT) {
             connection_directions.push(directions[index]);
         }
     }
