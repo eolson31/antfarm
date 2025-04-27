@@ -1,9 +1,9 @@
 import { new_node, create_hill } from "./node.js";
-import { initialize_start_nodes, find_path } from "./path_finding.js";
+import { find_path } from "./path_finding.js";
 import { ImageType } from "./image.js";
 
 export const farm_width = 9;
-export const air_height = 2;
+export const air_height = 1;
 export const dirt_height = 5;
 export const farm_height = air_height + dirt_height;
 
@@ -44,5 +44,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     create_hill(air_height - 1, Math.floor(farm_width / 2));
-    initialize_start_nodes();
 });

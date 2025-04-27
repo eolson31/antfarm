@@ -3,23 +3,8 @@ import { random_int } from "./random_number.js";
 import { air_height, dirt_height, farm_width } from "./ant_farm.js";
 import { ImageType } from "./image.js";
 
-let target_nodes = new Set();
-
-export function initialize_start_nodes() {
-    target_nodes.add(get_node(air_height, Math.floor(farm_width / 2)));
-}
-
 function get_source_node(location) {
     return get_node(location[0], location[1]);
-}
-
-function _node_distance_is_acceptable(source_node, distance) {
-    for (const target_node of target_nodes) {
-        if ((Math.abs(source_node.get_row - target_node.get_row) + Math.abs(source_node.get_column - target_node.get_column)) <= distance) {
-            return true
-        }
-    }
-    return false
 }
 
 function get_random_source_node() {
@@ -27,7 +12,7 @@ function get_random_source_node() {
         var row = random_int(dirt_height) + air_height;
         var column = random_int(farm_width);
         var source_node = get_node(row, column)
-    } while (!_node_distance_is_acceptable(source_node, 5) || at_target(source_node));
+    } while (at_target(source_node));
     return source_node;
 }
 
@@ -42,13 +27,9 @@ function _parse_key(key) {
     return get_node(row, column);
 }
 
-function at_target(source_node) {
-    for (const target_node of target_nodes) {
-        if ((source_node.get_row === target_node.get_row) && (source_node.get_column === target_node.get_column)) {
-            return true;
-        }
-    }
-    return false;
+function at_target(current_node) {
+    const target_types = [ImageType.PATH, ImageType.BUILDING];
+    return target_types.includes(current_node.image.image_type);
 }
 
 function _reconstruct_path(came_from, end_node) {
@@ -96,15 +77,9 @@ function bfs(source_node) {
     throw new Error("No path found")
 }
 
-function update_source_nodes(path) {
-    for (const node of path) {
-        target_nodes.add(node);
-    }
-}
 
 export function find_path(location=undefined) {
     const source_node = location === undefined ? get_random_source_node() : get_source_node(location);
     const path = bfs(source_node);
-    update_source_nodes(path);
     return path;
 }
