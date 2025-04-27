@@ -1,13 +1,13 @@
-import { get_node } from "./node.js";
+import { get_node, get_adjacent_nodes } from "./node.js";
 import { random_int } from "./random_number.js";
-import { dirt_height, farm_width } from "./ant_farm.js";
+import { air_height, dirt_height, farm_width } from "./ant_farm.js";
+import { ImageType } from "./image.js";
 
 let target_nodes = new Set();
 
 export function initialize_start_nodes() {
-    target_nodes.add(get_node(0, 4));
+    target_nodes.add(get_node(air_height, Math.floor(farm_width / 2)));
 }
-
 
 function get_source_node(location) {
     return get_node(location[0], location[1]);
@@ -24,15 +24,11 @@ function _node_distance_is_acceptable(source_node, distance) {
 
 function get_random_source_node() {
     do {
-        var row = random_int(dirt_height);
+        var row = random_int(dirt_height) + air_height;
         var column = random_int(farm_width);
         var source_node = get_node(row, column)
     } while (!_node_distance_is_acceptable(source_node, 5) || at_target(source_node));
     return source_node;
-}
-
-function get_adjacent_nodes(node) {
-    return node.node_connections;
 }
 
 // Convert a node {row, column} to a unique string key
@@ -86,7 +82,7 @@ function bfs(source_node) {
         }
         // Main search loop
         for (const adjacent_node of get_adjacent_nodes(current_node)) {
-            if (adjacent_node !== undefined) {
+            if (adjacent_node !== undefined && adjacent_node.image.image_type !== ImageType.AIR) {
                 let adjacent_key = _node_key(adjacent_node);
 
                 if (!explored.has(adjacent_key)) {

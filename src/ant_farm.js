@@ -1,6 +1,6 @@
-import { new_node } from "./node.js";
+import { new_node, create_hill } from "./node.js";
 import { initialize_start_nodes, find_path } from "./path_finding.js";
-import { ImageType } from "./dirt_image.js";
+import { ImageType } from "./image.js";
 
 export const farm_width = 9;
 export const air_height = 2;
@@ -38,10 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             let node = new_node(image, row, column, image_type);
             image.id = "dirt-" + row + "-" + column;
-            image.classList.add("dirt_image")
-            image.addEventListener("click", dirt_clicked)
+            image.classList.add("dirt_image");
+            image.addEventListener("click", dirt_clicked);
             row_div.appendChild(image); 
         }
     }
-    initialize_start_nodes()
+    create_hill(air_height - 1, Math.floor(farm_width / 2));
+    initialize_start_nodes();
 });
