@@ -102,24 +102,43 @@ function update_path_image(node) {
     node.refresh_image()
 }
 
-export function dig(building) {
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function dig(building) {
     const path = find_path();
     // Set nodes as a path
-    for (const node of path) {
+    for (let index = 0; index < path.length - 1; index++) {
+        const node = path[index];
         if (node.image.image_type !== ImageType.BUILDING) {
             node.set_as_path();
         }
     }
     // Put building image
-    let building_node = path[0];
+    let building_node = path[path.length - 1];
     building_node.set_as_building(building);
-    building_node.refresh_image();
+
     // Update path images
-    for (const row of nodes) {
-        for (const node of row) {
-            if (node.image.image_type === ImageType.PATH) {
+    for (let index = 0; index < path.length - 1; index++) {
+        const path_node = path[index];
+        const adjacent_nodes = get_adjacent_nodes(path_node);
+        const nodes_to_check = [path_node].concat(adjacent_nodes);
+        for (const node of nodes_to_check) {
+            if (node && node.image.image_type === ImageType.PATH) {
                 update_path_image(node);
+                await delay(500);
             }
         }
     }
+
+    // for (const row of nodes) {
+    //     for (const node of row) {
+    //         if (node.image.image_type === ImageType.PATH) {
+    //             update_path_image(node);
+    //             await delay(500);
+    //         }
+    //     }
+    // }
+    building_node.refresh_image();
 }

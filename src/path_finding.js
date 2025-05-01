@@ -81,5 +81,5 @@ function bfs(source_node) {
 export function find_path(location=undefined) {
     const source_node = location === undefined ? get_random_source_node() : get_source_node(location);
     const path = bfs(source_node);
-    return path;
+    return path.reverse();
 }
