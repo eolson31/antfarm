@@ -1,4 +1,4 @@
-import { new_node, create_hill } from "./node.js";
+import { new_node, create_hill, update_path_image } from "./node.js";
 import { find_path } from "./path_finding.js";
 import { ImageType } from "./image.js";
 
@@ -45,3 +45,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     create_hill(air_height - 1, Math.floor(farm_width / 2));
 });
+
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function dig(building) {
+    const path = find_path();
+    // Set nodes as a path
+    for (let index = 0; index < path.length - 1; index++) {
+        const node = path[index];
+        if (node.image.image_type !== ImageType.BUILDING) {
+            node.set_as_path();
+        }
+    }
+    // Put building image
+    let building_node = path[path.length - 1];
+    building_node.set_as_building(building);
+
+    // Update path images
+    for (let index = 0; index < path.length - 1; index++) {
+        const node = path[index];
+        if (node.image.image_type === ImageType.PATH) {
+            update_path_image(node);
+            await delay(1000);
+        }
+    }
+    building_node.refresh_image();
+}

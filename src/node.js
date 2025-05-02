@@ -87,7 +87,7 @@ export function get_adjacent_nodes(node) {
     return adjacent_nodes;
 }
 
-function update_path_image(node) {
+export function update_path_image(node) {
     let adjacent_nodes = get_adjacent_nodes(node);
     let connection_directions = [];
     // Find which nodes need to connect with
@@ -100,32 +100,4 @@ function update_path_image(node) {
     // Update image
     node.image.update_path_type(connection_directions);
     node.refresh_image()
-}
-
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-export async function dig(building) {
-    const path = find_path();
-    // Set nodes as a path
-    for (let index = 0; index < path.length - 1; index++) {
-        const node = path[index];
-        if (node.image.image_type !== ImageType.BUILDING) {
-            node.set_as_path();
-        }
-    }
-    // Put building image
-    let building_node = path[path.length - 1];
-    building_node.set_as_building(building);
-
-    // Update path images
-    for (let index = 0; index < path.length - 1; index++) {
-        const node = path[index];
-        if (node.image.image_type === ImageType.PATH) {
-            update_path_image(node);
-            await delay(1000);
-        }
-    }
-    building_node.refresh_image();
 }
