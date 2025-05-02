@@ -1,6 +1,6 @@
 import context from "./context.js";
 
-export function refresh() {
+export function refresh_info_bar() {
     const resources = document.getElementById("info_bar_resources")
     resources.textContent = context.foodCount + " food";
 
@@ -10,5 +10,5 @@ export function refresh() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const refreshButton = document.querySelector("button");
-    refreshButton.addEventListener("click", refresh);
+    refreshButton.addEventListener("click", refresh_info_bar);
 })

@@ -4,12 +4,17 @@ import { currently_building, building_queue } from "./ant_farm.js";
 import context from "./context.js";
 
 let sidebar_shown = true;
+let building_counts = {}
 
 function purchase_item(event) {
     const shop_item = get_shop_item_by_name(event.target.name);
-    if (context.foodCount < shop_item.price) {
+    const building_count = shop_item.name in building_counts ? building_counts[shop_item.name] : 0;
+
+    if (context.foodCount < shop_item.price || shop_item.max_count <= building_count) {
         return;
     }
+    context.sub_food(shop_item.price);
+    shop_item.name in building_counts ? building_counts[shop_item.name] = building_counts[shop_item.name] += 1 : building_counts[shop_item.name] = 1;
     building_queue.push(shop_item.name);
     if (!currently_building) {
         dig();

@@ -1,8 +1,8 @@
-import { refresh } from "./info_bar.js"
+import { refresh_info_bar } from "./info_bar.js"
 
 class Context {
     constructor() {
-        this.food = 0;
+        this.food = 10;
         this.strength = 0;
     }
 
@@ -16,7 +16,12 @@ class Context {
 
     add_food() {
         this.food++;
-        refresh();
+        refresh_info_bar();
+    }
+
+    sub_food(count) {
+        this.food -= count;
+        refresh_info_bar();
     }
 }
 
