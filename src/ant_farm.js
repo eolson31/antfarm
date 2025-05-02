@@ -7,6 +7,9 @@ export const air_height = 1;
 export const dirt_height = 5;
 export const farm_height = air_height + dirt_height;
 
+export let currently_building = false;
+export let building_queue = []
+
 function parse_dirt_name(name) {
     const split_name = name.split("-");
     return [split_name[1], split_name[2]];
@@ -51,7 +54,10 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export async function dig(building) {
+
+export async function dig() {
+    currently_building = true;
+    let building = building_queue.pop();
     const path = find_path();
     // Set nodes as a path
     for (let index = 0; index < path.length - 1; index++) {
@@ -73,4 +79,10 @@ export async function dig(building) {
         }
     }
     building_node.refresh_image();
+    await delay(1000);
+    // Check if need to build next building
+    if (building_queue.length !== 0) {
+        dig();
+    }
+    currently_building = false;
 }

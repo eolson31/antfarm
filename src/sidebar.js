@@ -1,18 +1,16 @@
 import { dig } from "./ant_farm.js";
-
-const item1 = {name: "item1"};
-const item2 = {name: "item2"};
-const item3 = {name: "item3"};
+import { shop_items } from "./shop_items.js";
+import { currently_building, building_queue } from "./ant_farm.js";
 
 let sidebar_shown = true;
-const shop_items = [item1, item2, item3]
-
 
 function purchase_item(event) {
     const shop_item = event.target.name;
-    dig(shop_item);
+    building_queue.push(shop_item);
+    if (!currently_building) {
+        dig();
+    }
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const toggle_sidebar_button = document.getElementById("toggle_sidebar_button");
@@ -35,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         shop_item.id = index;
         shop_item.name = item.name
-        shop_item.textContent = item.name;
+        shop_item.innerHTML = `${item.name}<br><span class="item_price">${item.price}🫘</span>`
         shop_item.classList.add("sidebar_item");
         shop_item.addEventListener("click", purchase_item);
     

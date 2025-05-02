@@ -157,6 +157,11 @@ body {
     color: #333;
 }
 
+.item_price {
+    font-size: 0.9em;
+    color: #555;
+}
+
 /* Individual Sidebar Items */
 .sidebar_item {
     padding: 10px;
