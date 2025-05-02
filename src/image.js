@@ -13,9 +13,10 @@ export const ImageType = Object.freeze({
     PATH: 1,
     BUILDING: 2,
     AIR: 3,
+    FOOD: 4,
 });
 
-function image_path_map(image_type, connection_directions=undefined, building=undefined) {
+function image_path_map(image_type, connection_directions=undefined, type=undefined) {
     switch (image_type) {
         case ImageType.DIRT:
             return "images/dirt.png";
@@ -23,7 +24,9 @@ function image_path_map(image_type, connection_directions=undefined, building=un
             let stringified = connection_directions.map(direction => direction_names[direction]).join('-');
             return "images/paths/" + stringified + ".png";
         case ImageType.BUILDING:
-            return "images/buildings/" + building + ".png";
+            return "images/buildings/" + type + ".png";
+        case ImageType.FOOD:
+            return "images/food/" + type + ".png";
         case ImageType.AIR:
             return "images/air.png"
     }
@@ -34,6 +37,7 @@ export class Image {
     constructor(image_type) {
         this.image_type = image_type;
         this.image_path = image_path_map(this.image_type)
+        this.health = -1;
     }
 
     get type() {
@@ -69,5 +73,11 @@ export class Image {
 
     update_building_type(building) {
         this.image_path = image_path_map(this.image_type, undefined, building);
+    }
+
+    set_as_food() {
+        this.image_type = ImageType.FOOD;
+        this.image_path = image_path_map(this.image_type, undefined, "food");
+        this.health = 5;
     }
 }

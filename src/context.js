@@ -1,3 +1,5 @@
+import { refresh } from "./info_bar.js"
+
 class Context {
     constructor() {
         this.food = 0;
@@ -10,6 +12,11 @@ class Context {
 
     get hillStrength() {
         return this.strength;
+    }
+
+    add_food() {
+        this.food++;
+        refresh();
     }
 }
 

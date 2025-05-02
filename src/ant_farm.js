@@ -1,6 +1,8 @@
-import { new_node, create_hill, update_path_image } from "./node.js";
+import { new_node, create_hill, update_path_image, get_node } from "./node.js";
 import { find_path } from "./path_finding.js";
 import { ImageType } from "./image.js";
+import { random_int } from "./random_number.js";
+import context from "./context.js";
 
 export const farm_width = 9;
 export const air_height = 1;
@@ -17,9 +19,15 @@ function parse_dirt_name(name) {
 
 function dirt_clicked(event) {
     const location = parse_dirt_name(event.target.id)
-    const path = find_path(location);
-    for (const node of path) {
-        node.element.classList.add("image_darken");
+    const node = get_node(location[0], location[1]);
+    if (node.image.image_type === ImageType.FOOD) {
+        node.image.health--;
+
+        context.add_food()
+        if (node.image.health <= 0) {
+            node.image.set_type(ImageType.AIR);
+            node.refresh_image();
+        }
     }
 }
 
@@ -47,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     create_hill(air_height - 1, Math.floor(farm_width / 2));
+    setInterval(place_food, (random_int(30) + 30) * 100)
 });
 
 
@@ -85,4 +94,14 @@ export async function dig() {
         dig();
     }
     currently_building = false;
+}
+
+function place_food() {
+    let row = air_height - 1;
+    let column = random_int(farm_width);
+    let node = get_node(row, column);
+    if (node.image.image_type === ImageType.AIR) {
+        node.image.set_as_food()
+        node.refresh_image()
+    }
 }

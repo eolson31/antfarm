@@ -1,6 +1,6 @@
 import context from "./context.js";
 
-function refresh() {
+export function refresh() {
     const resources = document.getElementById("info_bar_resources")
     resources.textContent = context.foodCount + " food";
 
