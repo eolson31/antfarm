@@ -121,24 +121,11 @@ export async function dig(building) {
 
     // Update path images
     for (let index = 0; index < path.length - 1; index++) {
-        const path_node = path[index];
-        const adjacent_nodes = get_adjacent_nodes(path_node);
-        const nodes_to_check = [path_node].concat(adjacent_nodes);
-        for (const node of nodes_to_check) {
-            if (node && node.image.image_type === ImageType.PATH) {
-                update_path_image(node);
-                await delay(500);
-            }
+        const node = path[index];
+        if (node.image.image_type === ImageType.PATH) {
+            update_path_image(node);
+            await delay(1000);
         }
     }
-
-    // for (const row of nodes) {
-    //     for (const node of row) {
-    //         if (node.image.image_type === ImageType.PATH) {
-    //             update_path_image(node);
-    //             await delay(500);
-    //         }
-    //     }
-    // }
     building_node.refresh_image();
 }
