@@ -18,3 +18,11 @@ export const shop_items = [
         max_count: 100,
     },
 ]
+
+export function get_shop_item_by_name(name) {
+    for (const item of shop_items) {
+        if (item.name === name) {
+            return item;
+        }
+    }
+}

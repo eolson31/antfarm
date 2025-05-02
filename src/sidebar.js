@@ -1,12 +1,16 @@
 import { dig } from "./ant_farm.js";
-import { shop_items } from "./shop_items.js";
+import { shop_items, get_shop_item_by_name } from "./shop_items.js";
 import { currently_building, building_queue } from "./ant_farm.js";
+import context from "./context.js";
 
 let sidebar_shown = true;
 
 function purchase_item(event) {
-    const shop_item = event.target.name;
-    building_queue.push(shop_item);
+    const shop_item = get_shop_item_by_name(event.target.name);
+    if (context.foodCount < shop_item.price) {
+        return;
+    }
+    building_queue.push(shop_item.name);
     if (!currently_building) {
         dig();
     }
