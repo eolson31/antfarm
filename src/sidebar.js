@@ -21,7 +21,7 @@ function purchase_item(event) {
     context.sub_food(shop_item.price);
     building_counts[shop_item.name] = get_building_count(shop_item.name) + 1;
     update_shop_text(shop_item.name);
-    building_queue.push(shop_item.name);
+    building_queue.push(shop_item);
     if (!currently_building) {
         dig();
     }

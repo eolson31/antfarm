@@ -3,7 +3,7 @@ import { refresh_info_bar } from "./info_bar.js"
 class Context {
     constructor() {
         this.food = 1000;
-        this.ants = 5;
+        this.ants = 3;
         this.max_ants = 5;
         this.strength = 0;
     }
@@ -15,6 +15,11 @@ class Context {
 
     sub_food(count) {
         this.food -= count;
+        refresh_info_bar();
+    }
+
+    add_ant() {
+        this.ants++;
         refresh_info_bar();
     }
 }

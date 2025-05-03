@@ -3,6 +3,7 @@ import { find_path } from "./path_finding.js";
 import { ImageType } from "./image.js";
 import { random_int } from "./random_number.js";
 import context from "./context.js";
+import { Building, handle_queen_building } from "./buildings.js";
 
 export const farm_width = 9;
 export const air_height = 1;
@@ -58,11 +59,16 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(place_food, (random_int(30) + 30) * 1000)
 });
 
+function handle_completed_building(building) {
+    switch (building.type) {
+        case Building.QUEEN_DEN:
+            setInterval(handle_queen_building, 30000);
+    }
+}
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 export async function dig() {
     currently_building = true;
@@ -77,7 +83,7 @@ export async function dig() {
     }
     // Put building image
     let building_node = path[path.length - 1];
-    building_node.set_as_building(building);
+    building_node.set_as_building(building.name);
 
     // Update path images
     for (let index = 0; index < path.length - 1; index++) {
@@ -89,6 +95,7 @@ export async function dig() {
     }
     building_node.refresh_image();
     await delay(1000);
+    handle_completed_building(building);
     // Check if need to build next building
     if (building_queue.length !== 0) {
         dig();
