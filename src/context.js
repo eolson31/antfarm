@@ -6,14 +6,6 @@ class Context {
         this.strength = 0;
     }
 
-    get foodCount() {
-        return this.food;
-    }
-
-    get hillStrength() {
-        return this.strength;
-    }
-
     add_food() {
         this.food++;
         refresh_info_bar();

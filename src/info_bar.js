@@ -2,10 +2,10 @@ import context from "./context.js";
 
 export function refresh_info_bar() {
     const resources = document.getElementById("info_bar_resources")
-    resources.textContent = context.foodCount + " food";
+    resources.textContent = context.food + " food";
 
     const strength = document.getElementById("info_bar_strength")
-    strength.textContent = context.hillStrength + " strength";
+    strength.textContent = context.strength + " strength";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
