@@ -1,6 +1,4 @@
 import { Image, directions, ImageType } from "./image.js";
-import {find_path} from "./path_finding.js"
-import { air_height, farm_width } from "./ant_farm.js";
 import { Building } from "./buildings.js";
 
 

@@ -3,7 +3,7 @@ import { find_path } from "./path_finding.js";
 import { ImageType } from "./image.js";
 import { random_int } from "./random_number.js";
 import context from "./context.js";
-import { Building, handle_queen_building } from "./buildings.js";
+import { Building, handle_food_storage_built, handle_queen_den_built } from "./buildings.js";
 
 export const farm_width = 9;
 export const air_height = 1;
@@ -18,10 +18,10 @@ function parse_dirt_name(name) {
     return [split_name[1], split_name[2]];
 }
 
-function dirt_clicked(event) {
+function node_clicked(event) {
     const location = parse_dirt_name(event.target.id)
     const node = get_node(location[0], location[1]);
-    if (node.image.image_type === ImageType.FOOD) {
+    if (node.image.image_type === ImageType.FOOD && context.food < context.max_food) {
         node.image.health--;
 
         context.add_food()
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let node = new_node(image, row, column, image_type);
             image.id = "dirt-" + row + "-" + column;
             image.classList.add("dirt_image");
-            image.addEventListener("click", dirt_clicked);
+            image.addEventListener("click", node_clicked);
             row_div.appendChild(image); 
         }
     }
@@ -62,7 +62,13 @@ document.addEventListener("DOMContentLoaded", () => {
 function handle_completed_building(building) {
     switch (building.type) {
         case Building.QUEEN_DEN:
-            setInterval(handle_queen_building, 30000);
+            setInterval(handle_queen_den_built, 30000);
+        case Building.FOOD_STORAGE:
+            handle_food_storage_built();
+        case Building.ANT_DEN:
+            handle_ant_den_built();
+        default:
+            console.error(`Building ${building.type} has no completed handler`)
     }
 }
 

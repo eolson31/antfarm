@@ -117,6 +117,10 @@ body {
     border-radius: 5px;
 }
 
+.text_red {
+    color: rgb(255, 123, 123);
+}
+
 /* Optional: subtle hover effect for interactivity */
 .hill_info p:hover {
     background-color: #4d4d4d;

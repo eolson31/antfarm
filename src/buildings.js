@@ -7,10 +7,17 @@ export const Building = Object.freeze({
     ANT_DEN: 'ant_den',
 });
 
-export function handle_queen_building() {
+export function handle_queen_den_built() {
     if (context.food > 0 && context.ants < context.max_ants) {
         context.sub_food(1);
         context.add_ant();
-        console.log("hit")
     }
+}
+
+export function handle_food_storage_built() {
+    context.add_max_food(50);
+}
+
+export function handle_ant_den_built() {
+    context.add_max_ant(5);
 }
