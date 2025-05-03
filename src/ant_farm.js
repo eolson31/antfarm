@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     create_hill(air_height - 1, Math.floor(farm_width / 2));
-    setInterval(place_food, (random_int(30) + 30) * 100)
+    setInterval(place_food, (random_int(30) + 30) * 1000)
 });
 
 

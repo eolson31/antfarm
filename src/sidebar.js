@@ -19,7 +19,7 @@ function purchase_item(event) {
     }
     // Purchase
     context.sub_food(shop_item.price);
-    shop_item.name in building_counts ? building_counts[shop_item.name] = building_counts[shop_item.name] += 1 : building_counts[shop_item.name] = 1;
+    building_counts[shop_item.name] = get_building_count(shop_item.name) + 1;
     update_shop_text(shop_item.name);
     building_queue.push(shop_item.name);
     if (!currently_building) {
