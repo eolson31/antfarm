@@ -5,7 +5,12 @@ let info_bar_contents = {};
 function refresh_info_bar_contents() {
     info_bar_contents = {
         "left": {
-            "ant_count": `<span ${context.ants >= context.max_ants ? 'class="text_red"' : ""}>🐜${context.ants} Ants</span>`,
+            "ant_count": `
+            <span class="info_item ${context.ants >= context.max_ants ? 'text_red' : ''}">
+                🐜${context.ants} Ants
+                <span class="tooltip">${context.ants}/${context.max_ants} Worker Ants</span>
+            </span>
+            `,
         },
         "right": {
             "food": `<span ${context.food >= context.max_food ? 'class="text_red"' : ""}>🫘${context.food} Food</span>`,

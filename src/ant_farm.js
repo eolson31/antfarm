@@ -1,9 +1,9 @@
+import { Building, handle_food_storage_built, handle_queen_den_built, handle_ant_den_built } from "./buildings.js";
 import { new_node, create_hill, update_path_image, get_node } from "./node.js";
 import { find_path } from "./path_finding.js";
 import { ImageType } from "./image.js";
 import { random_int } from "./random_number.js";
 import context from "./context.js";
-import { Building, handle_food_storage_built, handle_queen_den_built } from "./buildings.js";
 
 export const farm_width = 9;
 export const air_height = 1;
@@ -21,9 +21,14 @@ function parse_dirt_name(name) {
 function node_clicked(event) {
     const location = parse_dirt_name(event.target.id)
     const node = get_node(location[0], location[1]);
+    // Food clicked
     if (node.image.image_type === ImageType.FOOD && context.food < context.max_food) {
+        // Shake image
+        event.target.classList.remove("shake_image");
+        event.target.offsetWidth;
+        event.target.classList.add("shake_image");
+        
         node.image.health--;
-
         context.add_food()
         if (node.image.health <= 0) {
             node.image.set_type(ImageType.AIR);

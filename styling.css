@@ -127,6 +127,48 @@ body {
     cursor: default;
 }
 
+/* Positioning and styling for the info bar tooltip */
+.info_item {
+    position: relative;
+    display: inline-block;
+}
+
+/* Hide tooltip by default */
+.info_item .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 160%; /* or adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 150px;
+    border: 2px solid #aaa;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 10000;
+}
+
+/* Show tooltip on hover */
+.info_item:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.info_item .tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #aaa transparent;
+}
+
 
 /* Sidebar */
 
@@ -249,4 +291,18 @@ body {
 
 .image_darken {
     filter: brightness(25%);
+}
+
+/* FOOD */
+
+.shake_image {
+    animation: shake 0.25s;
+  
+  }
+  
+  @keyframes shake {
+    0% { transform: translate(2px, 2px) rotate(0deg); }
+    25% { transform: translate(2px, -2px) rotate(1deg); }
+    50% { transform: translate(-2px, -2px) rotate(1deg); }
+    75% { transform: translate(-2px, 2px) rotate(-1deg); }
 }
