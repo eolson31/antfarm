@@ -56,6 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
             let node = new_node(image, row, column, image_type);
             image.id = "dirt-" + row + "-" + column;
             image.classList.add("dirt_image");
+            // Random rotation of dirt
+            if (image_type === ImageType.DIRT) {
+                const rotation = random_int(3) * 90;
+                image.style.transform = `rotate(${rotation}deg)`
+            }
             image.addEventListener("click", node_clicked);
             row_div.appendChild(image); 
         }
@@ -68,12 +73,16 @@ function handle_completed_building(building) {
     switch (building.type) {
         case Building.QUEEN_DEN:
             setInterval(handle_queen_den_built, 30000);
+            break;
         case Building.FOOD_STORAGE:
             handle_food_storage_built();
+            break;
         case Building.ANT_DEN:
             handle_ant_den_built();
+            break;
         default:
             console.error(`Building ${building.type} has no completed handler`)
+            break;
     }
 }
 
@@ -100,10 +109,12 @@ export async function dig() {
     for (let index = 0; index < path.length - 1; index++) {
         const node = path[index];
         if (node.image.image_type === ImageType.PATH) {
+            node.reset_rotation();
             update_path_image(node);
             await delay(1000);
         }
     }
+    building_node.reset_rotation();
     building_node.refresh_image();
     await delay(1000);
     handle_completed_building(building);

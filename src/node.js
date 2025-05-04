@@ -32,6 +32,10 @@ class Node {
         this.connections[index] = node;
     }
 
+    reset_rotation() {
+        this.html_element.style.transform = `rotate(0deg)`
+    }
+
     set_as_path() {
         this.image.set_type(ImageType.PATH, false);
     }
@@ -42,7 +46,7 @@ class Node {
     }
 
     refresh_image() {
-        this.element.src = this.get_image;
+        this.html_element.src = this.get_image;
     }
 }
 

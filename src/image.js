@@ -24,7 +24,7 @@ function image_path_map(image_type, connection_directions=undefined, type=undefi
             let stringified = connection_directions.map(direction => direction_names[direction]).join('-');
             return "images/paths/" + stringified + ".png";
         case ImageType.BUILDING:
-            return "images/buildings/" + type + ".png";
+            return "images/buildings/" + type + ".gif";
         case ImageType.FOOD:
             return "images/food/" + type + ".png";
         case ImageType.AIR:

@@ -47,12 +47,6 @@ body {
 /* Each dirt image tile */
 .dirt_image {
     image-rendering: pixelated;
-    transition: transform 0.2s;
-}
-
-.dirt_image:hover {
-    transform: scale(1.05);
-    cursor: pointer;
 }
 
 /* Responsive resizing */
