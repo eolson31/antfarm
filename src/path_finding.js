@@ -12,7 +12,7 @@ function get_random_source_node() {
         var row = random_int(dirt_height) + air_height;
         var column = random_int(farm_width);
         var source_node = get_node(row, column)
-    } while (at_target(source_node));
+    } while (at_target(source_node) || bfs(source_node).length > 4);
     return source_node;
 }
 
@@ -63,7 +63,7 @@ function bfs(source_node) {
         }
         // Main search loop
         for (const adjacent_node of get_adjacent_nodes(current_node)) {
-            if (adjacent_node !== undefined && adjacent_node.image.image_type !== ImageType.AIR) {
+            if (adjacent_node !== undefined && adjacent_node.image.image_type !== ImageType.AIR && adjacent_node.image.image_type !== ImageType.FOOD) {
                 let adjacent_key = _node_key(adjacent_node);
 
                 if (!explored.has(adjacent_key)) {

@@ -13,7 +13,12 @@ function refresh_info_bar_contents() {
             `,
         },
         "right": {
-            "food": `<span ${context.food >= context.max_food ? 'class="text_red"' : ""}>🫘${context.food} Food</span>`,
+            "food":  `
+            <span class="info_item ${context.food >= context.max_food ? 'text_red' : ''}">
+                🫘${context.food} Food
+                <span class="tooltip">${context.food}/${context.max_food} Food</span>
+            </span>
+            `,
         },
     }
 }

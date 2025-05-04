@@ -5,10 +5,11 @@ import { ImageType } from "./image.js";
 import { random_int } from "./random_number.js";
 import context from "./context.js";
 
-export const farm_width = 9;
-export const air_height = 1;
-export const dirt_height = 5;
+export const farm_width = 15;
+export const air_height = 2;
+export const dirt_height = 8;
 export const farm_height = air_height + dirt_height;
+const build_delay = 100;
 
 export let currently_building = false;
 export let building_queue = []
@@ -66,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     create_hill(air_height - 1, Math.floor(farm_width / 2));
-    setInterval(place_food, (random_int(30) + 30) * 1000)
+    setInterval(place_food, (random_int(30) + 30) * 100)
 });
 
 function handle_completed_building(building) {
@@ -111,12 +112,12 @@ export async function dig() {
         if (node.image.image_type === ImageType.PATH) {
             node.reset_rotation();
             update_path_image(node);
-            await delay(1000);
+            await delay(build_delay);
         }
     }
     building_node.reset_rotation();
     building_node.refresh_image();
-    await delay(1000);
+    await delay(build_delay);
     handle_completed_building(building);
     // Check if need to build next building
     if (building_queue.length !== 0) {

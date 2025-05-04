@@ -47,34 +47,21 @@ body {
 /* Each dirt image tile */
 .dirt_image {
     image-rendering: pixelated;
-}
-
-/* Responsive resizing */
-@media screen and (min-width: 1301px) {
-    .dirt_image {
-        width: 128px;
-        height: 128px;
-    }
-}
-
-@media screen and (max-width: 1300px) {
-    .dirt_image {
-        width: 96px;
-        height: 96px;
-    }
+    width: 64px;
+    height: 64px;
 }
 
 @media screen and (max-width: 1000px) {
     .dirt_image {
-        width: 64px;
-        height: 64px;
+        width: 48px;
+        height: 48px;
     }
 }
 
 @media screen and (max-width: 600px) {
     .dirt_image {
-        width: 48px;
-        height: 48px;
+        width: 32px;
+        height: 32px;
     }
 }
 

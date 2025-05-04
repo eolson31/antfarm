@@ -2,7 +2,7 @@ import { refresh_info_bar } from "./info_bar.js"
 
 class Context {
     constructor() {
-        this.food = 1000;
+        this.food = 500;
         this.max_food = 10;
         this.ants = 3;
         this.max_ants = 5;

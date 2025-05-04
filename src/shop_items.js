@@ -12,14 +12,14 @@ export const shop_items = [
         name: "Food Storage",
         type: Building.FOOD_STORAGE,
         description: "Increases the maximum amount of food that can be stored.",
-        price: 15,
+        price: 10,
         max_count: 100,
     },
     {
         name: "Ant Den",
         type: Building.ANT_DEN,
-        description: "Increaeses the amount of ants allowed in the colony.",
-        price: 5,
+        description: "Increases the amount of ants allowed in the colony.",
+        price: 20,
         max_count: 100,
     },
 ]
