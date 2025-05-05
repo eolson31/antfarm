@@ -1,6 +1,9 @@
 import { Building } from "./buildings.js";
 
-export const shop_items = [
+export let shop_items = []
+
+export function init_shop_items() {
+    shop_items = [
     {
         name: "Queen Den",
         type: Building.QUEEN_DEN,
@@ -23,6 +26,7 @@ export const shop_items = [
         max_count: 100,
     },
 ]
+}
 
 export function get_shop_item_by_name(name) {
     for (const item of shop_items) {
@@ -31,3 +35,5 @@ export function get_shop_item_by_name(name) {
         }
     }
 }
+
+document.addEventListener("DOMContentLoaded", init_shop_items);

@@ -81,3 +81,11 @@ export class Image {
         this.health = 5;
     }
 }
+
+export function json_to_image_object(json) {
+    const image = new Image()
+    image.image_type = json.image_type;
+    image.image_path = json.image_path;
+    image.health = json.health;
+    return image;
+}

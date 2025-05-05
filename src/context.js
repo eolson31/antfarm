@@ -1,21 +1,27 @@
+import { get_cookie, set_cookie } from "./cookies.js";
 import { refresh_info_bar } from "./info_bar.js"
 
 class Context {
     constructor() {
-        this.food = 500;
-        this.max_food = 10;
-        this.ants = 3;
-        this.max_ants = 5;
-        this.strength = 0;
+        let cookie = get_cookie("food");
+        this.food = cookie !== null ? Number(cookie) : 300;
+        cookie = get_cookie("max_food");
+        this.max_food = cookie !== null ? Number(cookie) : 10;
+        cookie = get_cookie("ants");
+        this.ants = cookie !== null ? Number(cookie) : 3;
+        cookie = get_cookie("max_ants");
+        this.max_ants = cookie !== null ? Number(cookie) : 5;
     }
 
     add_food() {
         this.food++;
+        set_cookie("food", this.food);
         refresh_info_bar();
     }
 
     sub_food(count) {
         this.food -= count;
+        set_cookie("food", this.food);
         refresh_info_bar();
     }
 
@@ -26,6 +32,7 @@ class Context {
 
     add_ant() {
         this.ants++;
+        set_cookie("ants", this.food);
         refresh_info_bar();
     }
 

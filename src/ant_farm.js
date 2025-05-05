@@ -1,5 +1,5 @@
 import { Building, handle_food_storage_built, handle_queen_den_built, handle_ant_den_built } from "./buildings.js";
-import { new_node, create_hill, update_path_image, get_node } from "./node.js";
+import { new_node, create_hill, update_path_image, get_node, save_nodes_as_cookie } from "./node.js";
 import { find_path } from "./path_finding.js";
 import { ImageType } from "./image.js";
 import { random_int } from "./random_number.js";
@@ -57,20 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
             let node = new_node(image, row, column, image_type);
             image.id = "dirt-" + row + "-" + column;
             image.classList.add("dirt_image");
-            // Random rotation of dirt
-            if (image_type === ImageType.DIRT) {
-                const rotation = random_int(3) * 90;
-                image.style.transform = `rotate(${rotation}deg)`
-            }
+
             image.addEventListener("click", node_clicked);
             row_div.appendChild(image); 
         }
     }
     create_hill(air_height - 1, Math.floor(farm_width / 2));
-    setInterval(place_food, (random_int(30) + 30) * 100)
+    setInterval(place_food, (random_int(30) + 30) * 100);
+    save_nodes_as_cookie();
 });
 
-function handle_completed_building(building) {
+export function handle_completed_building(building) {
     switch (building.type) {
         case Building.QUEEN_DEN:
             setInterval(handle_queen_den_built, 30000);
@@ -105,7 +102,6 @@ export async function dig() {
     // Put building image
     let building_node = path[path.length - 1];
     building_node.set_as_building(building.name);
-
     // Update path images
     for (let index = 0; index < path.length - 1; index++) {
         const node = path[index];
@@ -119,6 +115,7 @@ export async function dig() {
     building_node.refresh_image();
     await delay(build_delay);
     handle_completed_building(building);
+    save_nodes_as_cookie();
     // Check if need to build next building
     if (building_queue.length !== 0) {
         dig();

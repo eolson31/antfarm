@@ -1,15 +1,27 @@
-import { Image, directions, ImageType } from "./image.js";
-import { Building } from "./buildings.js";
+import { Image, directions, ImageType, json_to_image_object } from "./image.js";
+import { Building, get_building_from_path } from "./buildings.js";
+import { get_cookie, set_cookie } from "./cookies.js";
+import { random_int } from "./random_number.js";
+import { handle_completed_building } from "./ant_farm.js";
 
-
+const cookie = get_cookie("nodes");
+const nodes_cookie = cookie !== null ? JSON.parse(cookie) : null;
 const nodes = []; // 2d array to store node grid
 
+export function save_nodes_as_cookie() {
+    const nodes_to_save = [ImageType.BUILDING, ImageType.PATH];
+    const image_data = nodes.map(row => 
+        row.map(node => nodes_to_save.includes(node.image.image_type) ? node.image : null)
+    );
+    set_cookie("nodes", JSON.stringify(image_data));
+}
+
 class Node {
-    constructor(element, row, column, image_type) {
+    constructor(element, row, column, image) {
         this.html_element = element;
         this.row = row;
         this.column = column;
-        this.image = new Image(image_type);
+        this.image = image;
     }
 
     get element() {
@@ -54,7 +66,27 @@ export function new_node(element, row, column, image_type) {
     if (!nodes[row]) {
         nodes[row] =[];
     }
-    const new_node = new Node(element, row, column, image_type);
+    // If it is a cookie
+    const cookie_image = nodes_cookie !== null ? nodes_cookie[row][column] : null;
+    if (cookie_image !== null) {
+        var new_node = new Node(element, row, column, json_to_image_object(cookie_image));
+        // Gross code for enabling building functionality
+        if (new_node.image.image_type === ImageType.BUILDING) {
+            const building = get_building_from_path(new_node.image.image_path);
+            if (building !== undefined) {
+                handle_completed_building(building);
+            }
+        }
+    } else {
+        // Not in cookie, so make default
+        var new_node = new Node(element, row, column, new Image(image_type));
+    }
+    // Random rotation of dirt
+    if (new_node.image.image_type === ImageType.DIRT) {
+        const rotation = random_int(3) * 90;
+        element.style.transform = `rotate(${rotation}deg)`
+    }
+
     nodes[row][column] = new_node;
     new_node.refresh_image();
     return new_node;
