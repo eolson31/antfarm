@@ -45,7 +45,7 @@ function node_clicked(event) {
             context.add_food(food_per_click)
         }
         if (node.image.health <= 0) {
-            node.image.set_type(ImageType.AIR);
+            node.image.set_type(ImageType.GRASS);
             node.not_clickable();
             node.refresh_image();
         }
@@ -64,7 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let column = 0; column < farm_width; column++) {
             const image = document.createElement("img");
             if (row < air_height) {
-                var image_type = ImageType.AIR
+                if (row === (air_height - 1)) {
+                    var image_type = ImageType.GRASS
+                } else {
+                    var image_type = ImageType.AIR
+                }
             } else {
                 var image_type = ImageType.DIRT
             }
@@ -77,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     create_hill(air_height - 1, Math.floor(farm_width / 2));
-    setInterval(place_food, (random_int(10) + 5) * 1000);
+    setInterval(place_food, (random_int(5) + 5) * 1000);
     save_nodes_as_cookie();
     recalculate_build_delay();
 });
@@ -152,7 +156,7 @@ function place_food() {
     let row = air_height - 1;
     let column = random_int(farm_width);
     let node = get_node(row, column);
-    if (node.image.image_type === ImageType.AIR) {
+    if (node.image.image_type === ImageType.GRASS) {
         node.image.set_as_food()
         node.clickable()
         node.refresh_image()

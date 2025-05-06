@@ -14,6 +14,7 @@ export const ImageType = Object.freeze({
     BUILDING: 2,
     AIR: 3,
     FOOD: 4,
+    GRASS: 5,
 });
 
 function image_path_map(image_type, connection_directions=undefined, type=undefined) {
@@ -29,6 +30,8 @@ function image_path_map(image_type, connection_directions=undefined, type=undefi
             return "images/food/" + type + ".png";
         case ImageType.AIR:
             return "images/air.png"
+        case ImageType.GRASS:
+            return "images/grass.png"
     }
 }
 

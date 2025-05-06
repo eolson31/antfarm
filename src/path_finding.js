@@ -63,7 +63,8 @@ function bfs(source_node) {
         }
         // Main search loop
         for (const adjacent_node of get_adjacent_nodes(current_node)) {
-            if (adjacent_node !== undefined && adjacent_node.image.image_type !== ImageType.AIR && adjacent_node.image.image_type !== ImageType.FOOD) {
+            if (adjacent_node !== undefined &&
+                adjacent_node.image.image_type !== ImageType.AIR && adjacent_node.image.image_type !== ImageType.FOOD  && adjacent_node.image.image_type !== ImageType.GRASS) {
                 let adjacent_key = _node_key(adjacent_node);
 
                 if (!explored.has(adjacent_key)) {
