@@ -10,7 +10,7 @@ function refresh_info_bar_contents() {
                 🐜${context.ants} Ants
                 <span class="tooltip">
                     ${context.ants}/${context.max_ants} Worker Ants</br>
-                    +${(context.ants * 20) / 1000}s build speed
+                    +${Math.min(4.8, (context.ants * 20) / 1000)}s build speed
                 </span>
             </span>
             `,
