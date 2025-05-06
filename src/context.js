@@ -1,3 +1,4 @@
+import { recalculate_build_delay } from "./ant_farm.js";
 import { get_cookie, set_cookie } from "./cookies.js";
 import { refresh_info_bar } from "./info_bar.js"
 
@@ -32,8 +33,9 @@ class Context {
 
     add_ant() {
         this.ants++;
-        set_cookie("ants", this.food);
+        set_cookie("ants", this.ants);
         refresh_info_bar();
+        recalculate_build_delay();
     }
 
     add_max_ant(count) {

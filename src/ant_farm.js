@@ -9,10 +9,14 @@ export const farm_width = 15;
 export const air_height = 2;
 export const dirt_height = 8;
 export const farm_height = air_height + dirt_height;
-const build_delay = 100;
+let build_delay = 1000;
 
 export let currently_building = false;
 export let building_queue = []
+
+export function recalculate_build_delay() {
+    build_delay = Math.max(100, 5000 - (context.ants * 5));
+}
 
 function parse_dirt_name(name) {
     const split_name = name.split("-");
@@ -65,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     create_hill(air_height - 1, Math.floor(farm_width / 2));
     setInterval(place_food, (random_int(30) + 30) * 100);
     save_nodes_as_cookie();
+    recalculate_build_delay();
 });
 
 export function handle_completed_building(building) {
@@ -107,13 +112,17 @@ export async function dig() {
         const node = path[index];
         if (node.image.image_type === ImageType.PATH) {
             node.reset_rotation();
-            update_path_image(node);
+            node.shake();
             await delay(build_delay);
+            update_path_image(node);
+            node.stop_shake();
         }
     }
     building_node.reset_rotation();
-    building_node.refresh_image();
+    building_node.shake();
     await delay(build_delay);
+    building_node.refresh_image();
+    building_node.stop_shake();
     handle_completed_building(building);
     save_nodes_as_cookie();
     // Check if need to build next building

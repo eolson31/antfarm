@@ -48,6 +48,14 @@ class Node {
         this.html_element.style.transform = `rotate(0deg)`
     }
 
+    shake() {
+        this.html_element.classList.add("shake_building")
+    }
+
+    stop_shake() {
+        this.html_element.classList.remove("shake_building")
+    }
+
     set_as_path() {
         this.image.set_type(ImageType.PATH, false);
     }

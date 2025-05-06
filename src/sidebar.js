@@ -35,7 +35,7 @@ export function update_shop_text(shop_item_name) {
     const max_text = item.max_count === 100 ? get_building_count(item.name) : `${get_building_count(item.name)}/${item.max_count}`
     shop_item.innerHTML = `
         ${item.name}<br>
-        <span class="item_price">${item.price}🫘</span>
+        <span class="item_price">🫘${item.price}</span>
         <span class="tooltip">${item.description}</br>You have: ${max_text}</span>
     `;
 }

@@ -180,7 +180,7 @@ body {
 .sidebar_items {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 250px;
     background-color: #f5e6ccfd; /* lighter bisque */
     border-radius: 0 10px 10px 0;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
@@ -191,14 +191,14 @@ body {
 /* Shop Header */
 .shop_text {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 32px;
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
     color: #333;
 }
 
 .item_price {
-    font-size: 0.9em;
+    font-size: 16px;
     color: #555;
 }
 
@@ -291,12 +291,23 @@ body {
 
 .shake_image {
     animation: shake 0.25s;
-  
   }
-  
+
   @keyframes shake {
     0% { transform: translate(2px, 2px) rotate(0deg); }
     25% { transform: translate(2px, -2px) rotate(1deg); }
     50% { transform: translate(-2px, -2px) rotate(1deg); }
     75% { transform: translate(-2px, 2px) rotate(-1deg); }
+}
+
+.shake_building {
+    animation: shake_building 0.25s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake_building {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    25% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, -1px) rotate(1deg); }
+    75% { transform: translate(-1px, 1px) rotate(-1deg); }
 }
