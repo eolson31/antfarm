@@ -1,4 +1,4 @@
-import { Building, handle_food_storage_built, handle_queen_den_built, handle_ant_den_built } from "./buildings.js";
+import { Building, handle_food_storage_built, handle_queen_den_built, handle_ant_den_built, handle_harvestor_built, handle_processor_built } from "./buildings.js";
 import { new_node, create_hill, update_path_image, get_node, save_nodes_as_cookie } from "./node.js";
 import { find_path } from "./path_finding.js";
 import { ImageType } from "./image.js";
@@ -10,12 +10,17 @@ export const air_height = 2;
 export const dirt_height = 8;
 export const farm_height = air_height + dirt_height;
 let build_delay = 1000;
+let food_per_click = 1;
 
 export let currently_building = false;
 export let building_queue = []
 
 export function recalculate_build_delay() {
-    build_delay = Math.max(100, 5000 - (context.ants * 5));
+    build_delay = Math.max(200, 5000 - (context.ants * 20));
+}
+
+export function update_food_per_click() {
+    food_per_click *= 2;
 }
 
 function parse_dirt_name(name) {
@@ -34,9 +39,14 @@ function node_clicked(event) {
         event.target.classList.add("shake_image");
         
         node.image.health--;
-        context.add_food()
+        if (context.food + food_per_click > context.max_food) {
+            context.add_food(context.max_food - context.food)
+        } else {
+            context.add_food(food_per_click)
+        }
         if (node.image.health <= 0) {
             node.image.set_type(ImageType.AIR);
+            node.not_clickable();
             node.refresh_image();
         }
     }
@@ -67,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     create_hill(air_height - 1, Math.floor(farm_width / 2));
-    setInterval(place_food, (random_int(30) + 30) * 100);
+    setInterval(place_food, (random_int(10) + 5) * 1000);
     save_nodes_as_cookie();
     recalculate_build_delay();
 });
@@ -75,13 +85,19 @@ document.addEventListener("DOMContentLoaded", () => {
 export function handle_completed_building(building) {
     switch (building.type) {
         case Building.QUEEN_DEN:
-            setInterval(handle_queen_den_built, 30000);
+            setInterval(handle_queen_den_built, 5000);
             break;
         case Building.FOOD_STORAGE:
             handle_food_storage_built();
             break;
         case Building.ANT_DEN:
             handle_ant_den_built();
+            break;
+        case Building.HARVESTER:
+            setInterval(handle_harvestor_built, 5000);
+            break;
+        case Building.FOOD_PROCESSOR:
+            handle_processor_built();
             break;
         default:
             console.error(`Building ${building.type} has no completed handler`)
@@ -138,6 +154,7 @@ function place_food() {
     let node = get_node(row, column);
     if (node.image.image_type === ImageType.AIR) {
         node.image.set_as_food()
+        node.clickable()
         node.refresh_image()
     }
 }

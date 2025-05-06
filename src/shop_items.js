@@ -25,6 +25,20 @@ export function init_shop_items() {
         price: 20,
         max_count: 100,
     },
+    {
+        name: "Harvestor",
+        type: Building.HARVESTER,
+        description: "Passively generates food for the colony.",
+        price: 40,
+        max_count: 100,
+    },
+    {
+        name: "Food Processor",
+        type: Building.FOOD_PROCESSOR,
+        description: "Increases the amount of food gained from collected food.",
+        price: 65,
+        max_count: 100,
+    },
 ]
 }
 

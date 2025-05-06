@@ -56,6 +56,14 @@ class Node {
         this.html_element.classList.remove("shake_building")
     }
 
+    clickable() {
+        this.html_element.classList.add("show_clickable")
+    }
+
+    not_clickable() {
+        this.html_element.classList.remove("show_clickable")
+    }
+
     set_as_path() {
         this.image.set_type(ImageType.PATH, false);
     }

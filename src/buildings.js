@@ -1,3 +1,4 @@
+import { update_food_per_click } from "./ant_farm.js";
 import context from "./context.js";
 import { get_shop_item_by_name } from "./shop_items.js";
 
@@ -6,6 +7,8 @@ export const Building = Object.freeze({
     QUEEN_DEN: 'queen_den',
     FOOD_STORAGE: 'food_storage',
     ANT_DEN: 'ant_den',
+    HARVESTER: 'harvester',
+    FOOD_PROCESSOR: 'processor',
 });
 
 export function get_building_from_path(image_path) {
@@ -27,4 +30,14 @@ export function handle_food_storage_built() {
 
 export function handle_ant_den_built() {
     context.add_max_ant(5);
+}
+
+export function handle_harvestor_built() {
+    if (context.food < context.max_food) {
+        context.add_food();
+    }
+}
+
+export function handle_processor_built() {
+    update_food_per_click();
 }

@@ -5,7 +5,7 @@ import { refresh_info_bar } from "./info_bar.js"
 class Context {
     constructor() {
         let cookie = get_cookie("food");
-        this.food = cookie !== null ? Number(cookie) : 300;
+        this.food = cookie !== null ? Number(cookie) : 0;
         cookie = get_cookie("max_food");
         this.max_food = cookie !== null ? Number(cookie) : 10;
         cookie = get_cookie("ants");
@@ -14,8 +14,8 @@ class Context {
         this.max_ants = cookie !== null ? Number(cookie) : 5;
     }
 
-    add_food() {
-        this.food++;
+    add_food(count=1) {
+        this.food += count;
         set_cookie("food", this.food);
         refresh_info_bar();
     }
