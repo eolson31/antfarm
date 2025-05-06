@@ -8,7 +8,10 @@ function refresh_info_bar_contents() {
             "ant_count": `
             <span class="info_item ${context.ants >= context.max_ants ? 'text_red' : ''}">
                 🐜${context.ants} Ants
-                <span class="tooltip">${context.ants}/${context.max_ants} Worker Ants</span>
+                <span class="tooltip">
+                    ${context.ants}/${context.max_ants} Worker Ants</br>
+                    +${(context.ants * 5) / 1000}s build speed
+                </span>
             </span>
             `,
         },
